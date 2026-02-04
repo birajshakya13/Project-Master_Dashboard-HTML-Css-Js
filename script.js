@@ -1,4 +1,5 @@
 let weatherApikey = "d30ef5f91ba14d56b3173652261801";
+let omdbApliKey = "b99b00eb";
 let habitCompleteCount = 0;
 let vaultCount = 0;
 let habitCount = 0;
@@ -114,7 +115,7 @@ function getHabitCard(key, data) {
       <p><button class="btn" onclick="habitProgress(this)">${(data.keyStatus === "true")? '<i class="fas fa-check-double"></i>': '<i class="fas fa-check"></i>'}</button></p>
     </div>
   `;
-  card.appendChild(div);
+  card.prepend(div);
 }
 
 function getMovieCard(key, data) {
@@ -123,7 +124,7 @@ function getMovieCard(key, data) {
   div.classList.add("movie-card");
   div.id = `${key}`;
   div.style.backgroundImage = `url(${data.Poster})`;
-  card.appendChild(div);
+  card.prepend(div);
 }
 
 function habitProgress(btn){
@@ -142,4 +143,26 @@ function habitProgress(btn){
     habitCompleteCount--;
     getProgress(habitCompleteCount, habitCount)
   }
+}
+
+async function searchMovies(input) {
+  if(input.length < 3) return;
+
+  let url = `http://www.omdbapi.com/?apikey=${omdbApliKey}&s=${input}`;
+  let card = document.querySelector("#search-result");
+  try{
+    let response = await fetch(url);
+    let data = await response.json();
+
+    card.innerHTML = "";
+
+    console.log(data);
+  }catch(err){
+    console.error(err);
+  }
+}
+
+function debounce(func, delay) {
+  let timer;
+  return 
 }

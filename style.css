@@ -211,7 +211,10 @@ article {
 .movie-card {
   height: 100px;
   aspect-ratio: 2/3;
-  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #555;
   border-radius: 10px;
   background-size: 100% 100%;
   background-position: center;
