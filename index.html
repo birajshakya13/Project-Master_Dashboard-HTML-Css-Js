@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo-container">
+        <h2>Master Vault</h2>
+      </div>
+      <div class="user-container">
+        <p>Biraj Shakya <i class="fa-solid fa-circle-user"></i></p>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <aside class="nav">
+      <div><i class="fas fa-house"></i><span>Home</span></div>
+      <div><i class="fas fa-dumbbell"></i><span>Habit</span></div>
+      <div><i class="fas fa-clapperboard"></i><span>Movies</span></div>
+      <div><i class="fas fa-gear"></i><span>Settings</span></div>
+    </aside>
+    <main class="body">
+    <article>
+      <div class="heading">
+        <p>Habit Streak</p>
+      </div>
+      <div id="habit-streak-contaienr">
+        <div id="habit-streak-card" class="streak-card">
+          <div class="habit-card-icon"><i class="fas fa-fire"></i></div>
+          <div class="streak-card-details">
+            <p>Streak Days</p>
+            <p>7 Days</p>
+          </div>
+        </div>
+      </div>
+    </article>
+    <div class="main">
+      <div class="heading">
+        <span>Daily Habits</span>
+        <div id="progress-bar">
+          <div></div>
+        </div>
+      </div>
+      <div id="habit-container"></div>
+      <div class="heading">Movies in your Vault</div>
+      <div id="movie-container" class="movie-container"></div>
+    </div>
+    <aside class="movie-search">
+      <div class="heading"><Span>Search Movies</Span></div>
+      <div id="searchbar-container">
+        <input id="searchBar" type="text" placeholder="Search Movies">
+      </div>
+      <div class="heading"><Span>Search Results</Span></div>
+      <div id="search-result" class="movie-container">
+        <div class="movie-card"></div>
+      </div>
+    </aside>
+    </main>
+  </main>
+  <script src="script.js"></script>
+</body>
+
+</html>

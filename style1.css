@@ -1,0 +1,46 @@
+@media (min-width: 1240px) {
+  .body {
+    grid-area: main;
+    display: grid;
+    grid-template-areas: "article srch"
+      "body srch";
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .nav {
+    grid-area: nav;
+    height: 80vh;
+  }
+}
+
+@media (max-width: 1239px) {
+  .body {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .movie-search {
+    grid-area: srch;
+  }
+}
+
+@media (max-width: 847px) {
+  main {
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: 1fr;
+    grid-template-areas: "nav" "main"; */
+    gap: 10px;
+  }
+
+  .nav {
+    grid-area: nav;
+    display: flex;
+  }
+
+  .nav div{
+    display: flex;
+    gap: 10px;
+  }
+}

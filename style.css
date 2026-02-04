@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+:root {
+  --theme-color: #15173D;
+  --font-color: #fff;
+}
+
+* {
+  margin: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
+  font-family: "Poppins", sans-serif;
+  color: var(--font-color);
+}
+
+body {
+  background-color: var(--theme-color);
+  padding: 10px;
+}
+
+header {
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  width: min(85vw, 1200px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "nav main";
+  gap: 10px;
+}
+
+.nav {
+  grid-area: nav;
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  overflow: auto;
+}
+
+.nav div {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav div:hover {
+  background-color: var(--theme-color);
+  border-radius: 10px;
+}
+
+article {
+  grid-area: article;
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.heading {
+  padding: 10px 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+#habit-streak-contaienr {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  overflow: auto;
+}
+
+.streak-card {
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  text-wrap: nowrap;
+}
+
+#habit-streak-card {
+  border: 2px solid #fab95b;
+  box-shadow: 0 0 20px #fab95b, inset 0 0 60px #fab95b;
+}
+
+#habit-streak-card i,
+#habit-streak-card p {
+  color: #fab95b;
+}
+
+#habit-count-card {
+  border: 2px solid #bdeaf5;
+  box-shadow: 0 0 20px #bdeaf5, inset 0 0 60px #bdeaf5;
+}
+
+#habit-count-card i,
+#habit-count-card p {
+  color: #bdeaf5;
+}
+
+#vault-count-card {
+  border: 2px solid #d8e983;
+  box-shadow: 0 0 20px #d8e983, inset 0 0 60px #d8e983;
+}
+
+#vault-count-card i,
+#vault-count-card p {
+  color: #d8e983;
+}
+
+#weather-card {
+  border: 2px solid #fbef76;
+  box-shadow: 0 0 20px #fbef76, inset 0 0 60px #fbef76;
+}
+
+#weather-card i,
+#weather-card p {
+  color: #fbef76;
+}
+
+.habit-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streak-card-details {
+  font-size: 0.8rem;
+}
+
+.main {
+  grid-area: body;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+#habit-progess-bar {
+  border-radius: 10px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#progress-bar {
+  height: 10px;
+  width: 200px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+#progress-bar div {
+  height: 10px;
+  border-radius: 10px;
+  background-color: #84934a;
+  transition: all 0.3s ease;
+}
+
+#habit-container {
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  gap: 10px;
+  overflow: auto;
+}
+
+.habit-card {
+  min-height: 75px;
+  min-width: 150px;
+  border: 1px solid #fbef76;
+  box-shadow: 0 0 10px #fbef76;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  background-color: #84934a;
+  width: 60px;
+  height: 20px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  border: none;
+  font-size: 0.5rem;
+}
+
+.movie-container {
+  padding: 0 20px;
+  display: flex;
+  /* flex-wrap: wrap; */
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.movie-card {
+  height: 100px;
+  aspect-ratio: 2/3;
+  background-color: red;
+  border-radius: 10px;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.movie-search {
+  grid-area: srch;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+#searchbar-container {
+  padding: 10px;
+}
+
+#searchBar {
+  border-radius: 10px;
+  width: 100%;
+  border: 1px solid var(--font-color);
+  background-color: var(--theme-color);
+  padding: 10px 20px;
+}
+
+/* #search-result{
+  padding: 20px 10px;
+  display: flex;
+  flex-wrap: wrap;
+
+} */
