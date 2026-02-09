@@ -216,8 +216,23 @@ article {
   align-items: center;
   border: 1px solid #555;
   border-radius: 10px;
+  background-image: url(Images/placeHolder.jpg);
   background-size: 100% 100%;
   background-position: center;
+  position: relative;
+}
+
+.icon-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.icon-container i{
+  color: #fff;
+  font-size: 1.5rem;
+  transform: scaleY(1);
+  text-shadow: 0 5px 10px #555;
 }
 
 .movie-search {

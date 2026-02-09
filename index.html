@@ -59,17 +59,19 @@
       <div id="movie-container" class="movie-container">
         <div class="movie-card">
           <i class="fas fa-plus"></i>
+          <div class="icon-container">
+            <i class="fas fa-bookmark"></i>
+          </div>
         </div>
       </div>
     </div>
     <aside class="movie-search">
       <div class="heading"><Span>Search Movies</Span></div>
       <div id="searchbar-container">
-        <input id="searchBar" type="text" placeholder="Search Movies">
+        <input id="searchBar" type="text" placeholder="Search Movies" oninput="searchwithDebounce(this.value)">
       </div>
       <div class="heading"><Span>Search Results</Span></div>
       <div id="search-result" class="movie-container">
-        <div class="movie-card"></div>
       </div>
     </aside>
     </main>
