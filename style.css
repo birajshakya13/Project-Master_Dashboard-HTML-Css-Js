@@ -216,7 +216,7 @@ article {
   align-items: center;
   border: 1px solid #555;
   border-radius: 10px;
-  background-image: url(Images/placeHolder.jpg);
+  /* background-image: url(Images/placeHolder.jpg); */
   background-size: 100% 100%;
   background-position: center;
   position: relative;
@@ -229,14 +229,25 @@ article {
 }
 
 .icon-container i{
-  color: #fff;
   font-size: 1.5rem;
   transform: scaleY(1);
   text-shadow: 0 5px 10px #555;
 }
 
-.icon-container i:hover{
+.marked{
   color: #eb0;
+}
+
+.unmarked{
+  color: #fff;
+}
+
+.unmarked:hover{
+  color: #eb0;
+}
+
+.marked:hover{
+  color: #fff;
 }
 
 .movie-search {

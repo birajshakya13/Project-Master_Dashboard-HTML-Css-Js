@@ -9,9 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       if (key.includes("movie")) {
+        let card = document.querySelector("#movie-container");
         let data = JSON.parse(localStorage.getItem(key));
         vaultCount++;
-        getMovieCard(key, data);
+        getMovieCard(key, key, data, card);
       } else if (key.includes("habit")) {
         let data = JSON.parse(localStorage.getItem(key));
         habitCount++;
@@ -66,7 +67,7 @@ async function getWeather(coords) {
     <p>${location.location.name}</p>
     </div>`;
     card.appendChild(div);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 }
@@ -115,18 +116,26 @@ function getHabitCard(key, data) {
   <div class="habit-card-icon"><i class="fas fa-${data.keyIcon}"></i></div>
   <div class="habit-card-details">
   <p>${data.keyName}</p>
-  <p><button class="btn" onclick="habitProgress(this)">${(data.keyStatus === "true")? '<i class="fas fa-check-double"></i>': '<i class="fas fa-check"></i>'}</button></p>
+  <p><button class="btn" onclick="habitProgress(this)">${(data.keyStatus === "true") ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>'}</button></p>
   </div>
   `;
   card.prepend(div);
 }
 
-function getMovieCard(key, data) {
-  let card = document.querySelector("#movie-container");
+function getMovieCard(existingKey, key, data, card) {
   let div = document.createElement("div");
   div.classList.add("movie-card");
   div.id = `${key}`;
-  div.style.backgroundImage = `url(${data.Poster})`;
+  div.style.backgroundImage = `url(${data.Poster}), url(Images/placeHolder.jpg)`;
+  div.innerHTML = existingKey === key? `
+    <div onclick="removeMovies(this)" class="icon-container">
+      <i class="fas fa-bookmark marked"></i>
+    </div>
+  `:`
+    <div onclick="addMovies(this)" class="icon-container">
+      <i class="fas fa-bookmark unmarked"></i>
+    </div>
+  `;
   card.prepend(div);
 }
 
@@ -151,33 +160,24 @@ function habitProgress(btn) {
 async function searchMovies(input) {
   if (input.length < 3) return;
   let card = document.querySelector("#search-result");
-  
+
   card.innerHTML = `<p> Serching for Movies....</p>`;
   let url = `http://www.omdbapi.com/?apikey=${omdbApliKey}&s=${input}`;
   try {
     let response = await fetch(url);
     let data = await response.json();
     let movies = data.Search;
-    
+
     card.innerHTML = "";
-    
+
     movies.forEach(movie => {
       let img = new Image();
       img.src = movie.Poster;
       img.onload = () => {
-        let div = document.createElement("div");
-        div.classList.add("movie-card");
-        div.id = `${movie.imdbID}`;
-        div.style.backgroundImage = `url(${movie.Poster}), url(Images/placeHolder.jpg)`;
-        div.innerHTML = `
-        <div onclick="addMovies(this)" class="icon-container">
-          <i class="fas fa-bookmark"></i>
-        </div>
-        `;
-        card.prepend(div);
+        getMovieCard(null, movie.imdbID, movie, card)
       }
     })
-  }catch(err) {
+  } catch (err) {
     console.error(err);
   }
 }
@@ -194,13 +194,14 @@ function debounce(func, delay) {
 
 let searchwithDebounce = debounce(searchMovies, 500)
 
-async function addMovies(btn){
-  let card = btn.parentElement;
+async function addMovies(btn) {
+  let box = btn.parentElement;
   let count = 0;
+  let card = document.querySelector("#movie-container");
 
-  let url = `http://www.omdbapi.com/?apikey=${omdbApliKey}&i=${card.id}`;
+  let url = `http://www.omdbapi.com/?apikey=${omdbApliKey}&i=${box.id}`;
 
-  try{
+  try {
     let response = await fetch(url);
     let movie = await response.json();
 
@@ -217,23 +218,30 @@ async function addMovies(btn){
       Actors: movie.Actors
     }
 
-    for(let i = 0; i < localStorage.length; i++){
+    for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
 
-      if(key.includes("movie")){
+      if (key.includes("movie")) {
         let localData = JSON.parse(localStorage.getItem(key));
-        if(localData.imdbID === movie.imdbID){
+        if (localData.imdbID === movie.imdbID) {
           count++;
         }
       }
     }
 
-    if(count === 0){
+    if (count === 0) {
       localStorage.setItem(`movie${movie.imdbID}`, JSON.stringify(data));
-      getMovieCard(`movie${movie.imdbID}`, data);
+      getMovieCard(`movie${movie.imdbID}`, `movie${movie.imdbID}`, data, card);
     }
+    btn.innerHTML = `<i class="fas fa-bookmark marked"></i>`;
+    btn.onclick = (e) => removeMovies(e, btn);
 
-  } catch(err){
+  } catch (err) {
     console.error(err);
-  } 
+  }
+}
+
+function removeMovies(btn){
+  let box = btn.parentElement;
+  box.remove();
 }
