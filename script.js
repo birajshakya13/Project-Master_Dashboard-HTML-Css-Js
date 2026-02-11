@@ -158,19 +158,19 @@ async function searchMovies(input) {
     let response = await fetch(url);
     let data = await response.json();
     let movies = data.Search;
-
+    
     card.innerHTML = "";
-
+    
     movies.forEach(movie => {
       let img = new Image();
       img.src = movie.Poster;
       img.onload = () => {
         let div = document.createElement("div");
         div.classList.add("movie-card");
-        div.id = `movie${movie.imdbId}`;
+        div.id = `${movie.imdbID}`;
         div.style.backgroundImage = `url(${movie.Poster}), url(Images/placeHolder.jpg)`;
         div.innerHTML = `
-        <div onclick="addMovies(this, ${movie.imdbId})" class="icon-container">
+        <div onclick="addMovies(this)" class="icon-container">
           <i class="fas fa-bookmark"></i>
         </div>
         `;
@@ -194,6 +194,46 @@ function debounce(func, delay) {
 
 let searchwithDebounce = debounce(searchMovies, 500)
 
-function addMovies(btn, movie){
-  console.log(btn)
+async function addMovies(btn){
+  let card = btn.parentElement;
+  let count = 0;
+
+  let url = `http://www.omdbapi.com/?apikey=${omdbApliKey}&i=${card.id}`;
+
+  try{
+    let response = await fetch(url);
+    let movie = await response.json();
+
+    console.log(movie);
+
+    let data = {
+      imdbID: movie.imdbID,
+      Poster: movie.Poster,
+      Title: movie.Title,
+      Year: movie.Year,
+      Rating: movie.Ratings.find(item => item.Source === "Internet Movie Database").Value,
+      Genre: movie.Genre,
+      Director: movie.Director,
+      Actors: movie.Actors
+    }
+
+    for(let i = 0; i < localStorage.length; i++){
+      let key = localStorage.key(i);
+
+      if(key.includes("movie")){
+        let localData = JSON.parse(localStorage.getItem(key));
+        if(localData.imdbID === movie.imdbID){
+          count++;
+        }
+      }
+    }
+
+    if(count === 0){
+      localStorage.setItem(`movie${movie.imdbID}`, JSON.stringify(data));
+      getMovieCard(`movie${movie.imdbID}`, data);
+    }
+
+  } catch(err){
+    console.error(err);
+  } 
 }

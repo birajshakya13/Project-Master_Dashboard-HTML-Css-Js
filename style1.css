@@ -10,7 +10,7 @@
   .nav {
     grid-area: nav;
     height: 80vh;
-    max-width: 160px;
+    min-width: 160px;
   }
 
   #search-result {
