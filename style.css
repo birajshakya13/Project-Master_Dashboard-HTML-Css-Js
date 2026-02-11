@@ -235,13 +235,16 @@ article {
   text-shadow: 0 5px 10px #555;
 }
 
+.icon-container i:hover{
+  color: #eb0;
+}
+
 .movie-search {
   grid-area: srch;
   background-color: rgba(255, 255, 255, 0.1);
   margin-top: 10px;
   border-radius: 10px;
-  min-width: 450px;
-  max-width: 450px;
+  
 }
 
 #searchbar-container {

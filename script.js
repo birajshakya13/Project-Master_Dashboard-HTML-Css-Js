@@ -170,7 +170,7 @@ async function searchMovies(input) {
         div.id = `movie${movie.imdbId}`;
         div.style.backgroundImage = `url(${movie.Poster}), url(Images/placeHolder.jpg)`;
         div.innerHTML = `
-        <div onclick="addMovies(this)" class="icon-container">
+        <div onclick="addMovies(this, movie)" class="icon-container">
           <i class="fas fa-bookmark"></i>
         </div>
         `;
@@ -194,6 +194,6 @@ function debounce(func, delay) {
 
 let searchwithDebounce = debounce(searchMovies, 500)
 
-function addMovies(btn){
-  
+function addMovies(btn, movie){
+  console.log(movie)
 }

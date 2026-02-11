@@ -10,10 +10,16 @@
   .nav {
     grid-area: nav;
     height: 80vh;
+    max-width: 160px;
   }
 
   #search-result {
     flex-wrap: wrap;
+  }
+
+  .movie-search {
+    min-width: 450px;
+    max-width: 450px;
   }
 }
 
@@ -26,6 +32,10 @@
 
   .movie-search {
     grid-area: srch;
+  }
+
+  .nav {
+    min-width: 145px;
   }
 }
 
