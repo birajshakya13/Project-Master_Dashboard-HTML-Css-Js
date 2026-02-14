@@ -3,7 +3,26 @@ let omdbApliKey = "b99b00eb";
 let habitCompleteCount = 0;
 let vaultCount = 0;
 let habitCount = 0;
+let logInPage = document.querySelector(".logIn-page");
 document.addEventListener("DOMContentLoaded", () => {
+  //Check if user Exist
+  function userFullname () {
+    let username = document.querySelector("#userFullname");
+
+    username.innerText = "";
+    for (let index = 0; index < sessionStorage.length; index++) {
+      const element = sessionStorage.key(index);
+
+      if(element.includes("user")){
+        let localdata = JSON.parse(sessionStorage.getItem(element));
+        username.innerHTML = `${localdata.fullName}`;
+        logInPage.style.display = "none";
+      }
+    }
+  }
+
+  userFullname();
+
   //for Vault Count
   function getVault() {
     for (let i = 0; i < localStorage.length; i++) {
@@ -244,4 +263,87 @@ async function addMovies(btn) {
 function removeMovies(btn){
   let box = btn.parentElement;
   box.remove();
+}
+
+function toggleForm(btn) {
+  let signInForm = document.querySelector("#signin-form");
+  let signUpForm = document.querySelector("#signup-form");
+  if(btn.innerText === "Sign Up"){
+    signUpForm.style.display = "block"
+    signInForm.style.display = "none"
+  }else{
+    signUpForm.style.display = "none"
+    signInForm.style.display = "block"
+  }
+}
+
+function togglePassword(btn) {
+  let pwd = btn.parentElement.querySelector("input");
+
+  if(pwd.type === "password"){
+    pwd.type = "text";
+    btn.innerHTML = `<i class="fas fa-eye-slash"></i>`;
+  }else{
+    pwd.type = "password";
+    btn.innerHTML = `<i class="fas fa-eye"></i>`;
+  }
+}
+
+let SignUpForm = document.querySelector("#signup-form");
+
+SignUpForm.addEventListener("submit", (e) => {
+  
+  let formData = new FormData(SignUpForm);
+  let data = Object.fromEntries(formData.entries());
+  
+  for(let i = 0; i < localStorage.length; i++){
+    let key = localStorage.key(i);
+    
+    if(key.includes("user")){
+      let localData = JSON.parse(localStorage.getItem(key));
+      if(localData.userName === data.userName){
+        e.preventDefault();
+        console.log("User Already Exists");
+      }else{
+        let userId = `user${Date.now()}`;
+        localStorage.setItem(userId, JSON.stringify(data));
+      }
+    }
+  }
+
+})
+
+let LogInForm = document.querySelector("#signin-form");
+
+LogInForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  let formData = new FormData(LogInForm);
+  let data = Object.fromEntries(formData.entries());
+
+  for(let i = 0; i < localStorage.length; i++){
+    let key = localStorage.key(i);
+
+    if(key.includes("user")){
+      let localData = JSON.parse(localStorage.getItem(key));
+      if(localData.userName === data.userName && localData.passWord === data.passWord){
+        console.log("loged In");
+        console.log(localData);
+        sessionStorage.setItem(key, JSON.stringify(localData));
+        return
+      }
+    }
+  }
+  console.log("Username or Password do not exists");
+  console.log(data.userName);
+})
+
+function toggleLogout() {
+  let box = document.querySelector("#profileContainer");
+
+  box.style.display = (box.style.display === "block")? "none": "block";
+}
+
+function logOut() {
+  console.log("logOut");
 }

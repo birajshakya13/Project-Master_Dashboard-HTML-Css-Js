@@ -286,30 +286,102 @@ article {
 .logIn-container{
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 20px;
+  width: max(30vw, 400px);
+  box-shadow: 0 0 5px #555;
 }
 
 .logIn-container h1{
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .login-bar{
   color: black;
   position: relative;
+  margin: 20px 0;
 }
 
-#logIn{
+.login-bar input{
   color: black;
   width: 100%;
-  padding: 10px;
+  padding: 20px 10px 10px 10px;
   border-radius: 10px;
   border: none;
+}
+
+.login-bar input:focus{
+  outline: 2px auto var(--theme-color);
 }
 
 .login-bar label{
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 15px;
   color: var(--theme-color);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
 
+.login-bar input:focus + label,
+.login-bar input:not(:placeholder-shown) + label{
+  top: 0;
+  font-size: 0.8rem;
+}
+
+.login-bar button{
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  background-color: rgba(255 , 255, 255, 0);
+  border: none;
+}
+
+.login-bar button i{
+  color: var(--theme-color);
+}
+
+.btn-container{
+  margin: 10px 0;
+}
+
+.formBtn{
+  background-color: var(--theme-color);
+  color: var(--font-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid var(--font-color);
+  cursor: pointer;
+}
+
+.noBtn{
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+#signup-form{
+  display: none;
+}
+
+.user-container{
+  position: relative;
+}
+
+#userFullname{
+  pointer-events: none;
+}
+
+#profileContainer{
+  display: none;
+  position: absolute;
+  top: 30px;
+  background-color: #999;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#profileContainer p{
+  cursor: pointer;
 }
