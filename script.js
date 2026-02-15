@@ -4,22 +4,26 @@ let habitCompleteCount = 0;
 let vaultCount = 0;
 let habitCount = 0;
 let logInPage = document.querySelector(".logIn-page");
-document.addEventListener("DOMContentLoaded", () => {
-  //Check if user Exist
-  function userFullname () {
-    let username = document.querySelector("#userFullname");
 
-    username.innerText = "";
-    for (let index = 0; index < sessionStorage.length; index++) {
-      const element = sessionStorage.key(index);
+function userFullname() {
+  let username = document.querySelector("#userFullname");
 
-      if(element.includes("user")){
-        let localdata = JSON.parse(sessionStorage.getItem(element));
-        username.innerHTML = `${localdata.fullName}`;
-        logInPage.style.display = "none";
-      }
+  username.innerText = "";
+  for (let index = 0; index < sessionStorage.length; index++) {
+    const element = sessionStorage.key(index);
+
+    if (element.includes("user")) {
+      let localdata = JSON.parse(sessionStorage.getItem(element));
+      username.innerHTML = `${localdata.fullName}`;
+      logInPage.style.display = "none";
     }
   }
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  //Check if user Exist
+
 
   userFullname();
 
@@ -101,16 +105,14 @@ function getProgress(i, j) {
 }
 
 function getVaultCount(j) {
-  let card = document.querySelector("#habit-streak-contaienr");
-  let div = document.createElement("div");
-  div.id = "vault-count-card";
-  div.classList.add("streak-card");
-  div.innerHTML = `<div class="habit-card-icon"><i class="fas fa-clapperboard"></i></div>
-  <div class="streak-card-details">
-  <p>Vault Count</p>
-  <p>${j} Movie(s)</p>
-  </div>`;
-  card.appendChild(div);
+  let movieCount = document.querySelector("#movieCount");
+  if (j === 1) {
+    movieCount.innerText = `${j} Movie`;
+  } else if (j > 1) {
+    movieCount.innerText = `${j} Movies`;
+  } else {
+    movieCount.innerText = `${j} Movie(s)`;
+  }
 }
 
 function getHabitCount(j) {
@@ -146,11 +148,11 @@ function getMovieCard(existingKey, key, data, card) {
   div.classList.add("movie-card");
   div.id = `${key}`;
   div.style.backgroundImage = `url(${data.Poster}), url(Images/placeHolder.jpg)`;
-  div.innerHTML = existingKey === key? `
+  div.innerHTML = existingKey === key ? `
     <div onclick="removeMovies(this)" class="icon-container">
       <i class="fas fa-bookmark marked"></i>
     </div>
-  `:`
+  `: `
     <div onclick="addMovies(this)" class="icon-container">
       <i class="fas fa-bookmark unmarked"></i>
     </div>
@@ -251,6 +253,8 @@ async function addMovies(btn) {
     if (count === 0) {
       localStorage.setItem(`movie${movie.imdbID}`, JSON.stringify(data));
       getMovieCard(`movie${movie.imdbID}`, `movie${movie.imdbID}`, data, card);
+      vaultCount++;
+      getVaultCount(vaultCount);
     }
     btn.innerHTML = `<i class="fas fa-bookmark marked"></i>`;
     btn.onclick = (e) => removeMovies(e, btn);
@@ -260,18 +264,22 @@ async function addMovies(btn) {
   }
 }
 
-function removeMovies(btn){
+function removeMovies(btn) {
   let box = btn.parentElement;
   box.remove();
+  let data = JSON.parse(localStorage.getItem(box.id));
+  localStorage.removeItem(box.id);
+  vaultCount--;
+  getVaultCount(vaultCount);
 }
 
 function toggleForm(btn) {
   let signInForm = document.querySelector("#signin-form");
   let signUpForm = document.querySelector("#signup-form");
-  if(btn.innerText === "Sign Up"){
+  if (btn.innerText === "Sign Up") {
     signUpForm.style.display = "block"
     signInForm.style.display = "none"
-  }else{
+  } else {
     signUpForm.style.display = "none"
     signInForm.style.display = "block"
   }
@@ -280,10 +288,10 @@ function toggleForm(btn) {
 function togglePassword(btn) {
   let pwd = btn.parentElement.querySelector("input");
 
-  if(pwd.type === "password"){
+  if (pwd.type === "password") {
     pwd.type = "text";
     btn.innerHTML = `<i class="fas fa-eye-slash"></i>`;
-  }else{
+  } else {
     pwd.type = "password";
     btn.innerHTML = `<i class="fas fa-eye"></i>`;
   }
@@ -292,19 +300,19 @@ function togglePassword(btn) {
 let SignUpForm = document.querySelector("#signup-form");
 
 SignUpForm.addEventListener("submit", (e) => {
-  
+
   let formData = new FormData(SignUpForm);
   let data = Object.fromEntries(formData.entries());
-  
-  for(let i = 0; i < localStorage.length; i++){
+
+  for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);
-    
-    if(key.includes("user")){
+
+    if (key.includes("user")) {
       let localData = JSON.parse(localStorage.getItem(key));
-      if(localData.userName === data.userName){
+      if (localData.userName === data.userName) {
         e.preventDefault();
         console.log("User Already Exists");
-      }else{
+      } else {
         let userId = `user${Date.now()}`;
         localStorage.setItem(userId, JSON.stringify(data));
       }
@@ -316,34 +324,34 @@ SignUpForm.addEventListener("submit", (e) => {
 let LogInForm = document.querySelector("#signin-form");
 
 LogInForm.addEventListener("submit", (e) => {
-  e.preventDefault();
 
+  e.preventDefault();
   let formData = new FormData(LogInForm);
   let data = Object.fromEntries(formData.entries());
 
-  for(let i = 0; i < localStorage.length; i++){
+  for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);
 
-    if(key.includes("user")){
+    if (key.includes("user")) {
       let localData = JSON.parse(localStorage.getItem(key));
-      if(localData.userName === data.userName && localData.passWord === data.passWord){
-        console.log("loged In");
-        console.log(localData);
+      if (localData.userName === data.userName && localData.passWord === data.passWord) {
         sessionStorage.setItem(key, JSON.stringify(localData));
+        logInPage.style.display = "none";
+        userFullname();
         return
       }
     }
   }
   console.log("Username or Password do not exists");
-  console.log(data.userName);
 })
 
 function toggleLogout() {
   let box = document.querySelector("#profileContainer");
 
-  box.style.display = (box.style.display === "block")? "none": "block";
+  box.style.display = (box.style.display === "block") ? "none" : "block";
 }
 
 function logOut() {
-  console.log("logOut");
+  sessionStorage.clear();
+  location.reload();
 }

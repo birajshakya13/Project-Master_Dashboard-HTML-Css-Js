@@ -385,3 +385,25 @@ article {
 #profileContainer p{
   cursor: pointer;
 }
+
+.asideDiv{
+  display: none;
+}
+
+.asideDiv:target{
+  display: block;
+}
+
+#habitDiv{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  
+}
+
+.habitDivContainer{
+  box-shadow: 0 0 10px #555;
+
+}
